@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sobre Nós — Bora</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/favicon-blue.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .about-hero {
+      background: radial-gradient(130% 120% at 78% -10%, #5b54f0 0%, var(--indigo-700) 40%, var(--indigo-950) 100%);
+      padding: 140px 24px 80px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero::before {
+      content: "";
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.22), transparent 62%);
+      pointer-events: none;
+    }
+    .about-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.03em;
+    }
+    .about-hero p {
+      font-size: 1.18rem;
+      line-height: 1.6;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #dbdcf7;
+    }
+    .about-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    .about-back-row {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 24px 0;
+    }
+    .policy-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--purple);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: transform 0.2s ease;
+    }
+    .policy-back:hover {
+      transform: translateX(-4px);
+      color: var(--purple-light);
+    }
+    .about-section {
+      margin-bottom: 48px;
+    }
+    .about-section p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .about-section strong {
+      color: var(--ink);
+    }
+    .about-quote {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--purple-dark);
+      line-height: 1.45;
+      border-left: 4px solid var(--purple-dark);
+      padding: 4px 0 4px 20px;
+      margin: 32px 0;
+    }
+    .about-divider {
+      border: none;
+      border-top: 1.5px solid var(--line);
+      margin: 44px 0;
+    }
+    .founders-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin: 36px 0;
+    }
+    .founder-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 24px;
+      box-shadow: var(--sh-sm);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .founder-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -8px rgba(28,27,75,0.15);
+    }
+    .founder-avatar {
+      width: 52px !important;
+      height: 52px !important;
+      border-radius: 14px !important;
+      background: var(--lav) !important;
+      color: var(--purple-dark) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin-bottom: 16px !important;
+    }
+    .founder-avatar .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-size: 26px !important;
+      width: 26px !important;
+      height: 26px !important;
+      color: var(--purple-dark) !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .diff-icon .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-size: 24px !important;
+      width: 24px !important;
+      height: 24px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .policy-back .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-size: 18px !important;
+      width: 18px !important;
+      height: 18px !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    .founder-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .founder-role {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--purple-light);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .founder-bio {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--soft);
+    }
+    .diff-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 36px 0;
+    }
+    .diff-card {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: var(--sh-sm);
+      transition: transform 0.3s ease;
+    }
+    .diff-card:hover {
+      transform: translateY(-2px);
+    }
+    .diff-icon {
+      flex-shrink: 0;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+    }
+    .diff-icon.purple { background: var(--lav); color: var(--purple-dark); }
+    .diff-icon.green  { background: #ecfdf5; color: var(--green); }
+    .diff-icon.blue   { background: #eff6ff; color: var(--cyan-600); }
+    .diff-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+    .diff-desc {
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+    .about-closing {
+      background: radial-gradient(120% 130% at 12% 20%, #2a2960, var(--indigo-900) 60%, var(--indigo-950));
+      color: #fff;
+      border-radius: 20px;
+      padding: 48px 40px;
+      text-align: center;
+      margin-top: 56px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-closing::before {
+      content: "";
+      position: absolute;
+      left: 6%;
+      top: 10%;
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 62%);
+      pointer-events: none;
+    }
+    .about-closing p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      opacity: 0.9;
+      margin-bottom: 16px;
+      color: #dbdcf7;
+    }
+    .about-closing p.highlight-quote {
+      font-size: 1.25rem;
+      font-weight: 700;
+      opacity: 1;
+      margin-bottom: 30px;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      .founders-row { grid-template-columns: 1fr; }
+      .about-closing { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body style="background: var(--paper);">
+
+<header id="hd" class="scrolled">
+  <div class="bar">
+    <a href="index.html" class="wm w logo">b<span class="o">o<span class="arc"><svg viewBox="0 0 100 50"><path d="M6 46 Q50 2 94 46" fill="none" stroke-width="13" stroke-linecap="round"/></svg></span></span>ra</a>
+    <span class="prelaunch">● Pré-lançamento · Rio de Janeiro</span>
+    <span class="spacer"></span>
+    <a href="index.html#cadastro" class="btn btn-primary btn-sm">Entrar na lista</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="about-hero">
+  <span class="eyebrow" style="color: var(--cyan);">Nossa história</span>
+  <h1>O Bora nasceu de uma<br>experiência real.</h1>
+  <p>Criado por quem já passou pelo problema, para resolver o problema de verdade.</p>
+</div>
+
+<div class="about-back-row">
+  <a href="index.html" class="policy-back">
+    <span class="material-symbols-outlined" style="font-size:18px;">&#xe5c4;</span>
+    <span>Voltar ao site</span>
+  </a>
+</div>
+
+<div class="about-wrap">
+
+  <!-- Origem -->
+  <div class="about-section">
+    <p>
+      A ideia surgiu quando <strong>Alexandre Júnior</strong>, um dos fundadores do projeto, precisou contratar um serviço para sua casa e passou por uma situação frustrante. Após uma experiência ruim e a dificuldade para encontrar outro profissional confiável, surgiu uma pergunta simples:
+    </p>
+
+    <div class="about-quote">
+      Por que ainda é tão difícil contratar serviços com segurança e confiança?
+    </div>
+
+    <p>
+      A partir dessa reflexão nasceu a visão do Bora: criar uma plataforma capaz de conectar clientes, profissionais e fornecedores de forma transparente, segura e eficiente.
+    </p>
+  </div>
+
+  <hr class="about-divider">
+
+  <!-- Fundadores -->
+  <div class="about-section">
+    <p>
+      Quando Alexandre compartilhou a ideia, ela rapidamente ganhou força. Foi então que seu sócio, <strong>Júnior Araújo</strong>, especialista em tecnologia, infraestrutura e soluções em nuvem, assumiu a missão de transformar o conceito em realidade. Com sua experiência em arquitetura de sistemas, integrações e inteligência artificial, ele estruturou toda a base tecnológica necessária para dar vida ao projeto.
+    </p>
+
+    <div class="founders-row">
+      <div class="founder-card">
+        <div class="founder-avatar"><span class="material-symbols-outlined">&#xe7fd;</span></div>
+        <div class="founder-name">Alexandre Júnior</div>
+        <div class="founder-role">Co-fundador & CEO</div>
+        <div class="founder-bio">Visionário do projeto, Alexandre identificou na própria vida cotidiana o problema que o Bora veio resolver.</div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-avatar"><span class="material-symbols-outlined">&#xeb8e;</span></div>
+        <div class="founder-name">Júnior Araújo</div>
+        <div class="founder-role">Co-fundador & CTO</div>
+        <div class="founder-bio">Especialista em tecnologia, infraestrutura e IA, responsável por toda a arquitetura técnica da plataforma.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="about-divider">
+
+  <!-- Motivação pessoal -->
+  <div class="about-section">
+    <p>
+      Mas a motivação para construir o Bora também veio de uma experiência pessoal.
+    </p>
+    <p>
+      Durante a preparação da chegada de sua filha recém-nascida, Júnior contratou um marceneiro para produzir um guarda-roupa planejado. O serviço não foi entregue conforme o combinado e, além do prejuízo financeiro, houve dificuldade para recuperar o valor pago.
+    </p>
+    <p>
+      Essa situação evidenciou um problema comum enfrentado por milhares de pessoas: <strong>a falta de mecanismos que protejam tanto quem contrata quanto quem presta um serviço.</strong>
+    </p>
+  </div>
+
+  <hr class="about-divider">
+
+  <!-- Diferenciais -->
+  <div class="about-section">
+    <p>
+      Foi nesse momento que nasceram os principais diferenciais do Bora:
+    </p>
+
+    <div class="diff-cards">
+      <div class="diff-card">
+        <div class="diff-icon purple"><span class="material-symbols-outlined">&#xe897;</span></div>
+        <div>
+          <div class="diff-title">Pagamento protegido por escrow</div>
+          <div class="diff-desc">O valor pago pelo cliente fica protegido até que o serviço seja concluído conforme o combinado. O profissional tem a garantia de que o pagamento está reservado, enquanto o cliente tem a segurança de que seu dinheiro não será liberado antes da entrega.</div>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon blue"><span class="material-symbols-outlined">&#xe65f;</span></div>
+        <div>
+          <div class="diff-title">Contratos inteligentes com IA</div>
+          <div class="diff-desc">O Bora gera contratos com apoio de inteligência artificial, formalizando os acordos entre as partes e trazendo mais clareza e segurança jurídica para cada contratação.</div>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon green"><span class="material-symbols-outlined">&#xe8e8;</span></div>
+        <div>
+          <div class="diff-title">Garantia mínima de 7 dias</div>
+          <div class="diff-desc">Todos os serviços realizados na plataforma têm garantia mínima obrigatória de 7 dias, sempre respeitando os termos definidos em contrato. Uma camada extra de proteção para clientes e profissionais.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fechamento -->
+  <div class="about-closing">
+    <p>Mais do que uma plataforma digital, o Bora foi criado para resolver problemas reais.</p>
+    <p>Nosso objetivo é tornar a contratação de serviços mais segura, organizada e acessível — permitindo que clientes encontrem profissionais qualificados, que profissionais tenham acesso a novas oportunidades e que fornecedores participem de um ecossistema construído sobre confiança, tecnologia e responsabilidade.</p>
+    <p class="highlight-quote">Porque contratar ou oferecer serviços não deveria ser uma aposta.<br>Deveria ser simples, seguro e confiável.</p>
+    <a href="index.html#cadastro" class="btn btn-primary" style="background:#fff !important;color:var(--purple-dark) !important;box-shadow:0 8px 24px rgba(255,255,255,0.15) !important;">Entrar na lista de espera</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="wm w" style="font-size:1.6rem">b<span class="o">o<span class="arc"><svg viewBox="0 0 100 50"><path d="M6 46 Q50 2 94 46" fill="none" stroke-width="13" stroke-linecap="round"/></svg></span></span>ra</span>
+      <div class="foot-links">
+        <a href="index.html#cadastro">Entrar na lista</a>
+        <a href="https://www.instagram.com/bora_conecta" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          <span>Instagram</span>
+        </a>
+        <a href="#">Contato</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span class="tag">boraconecta.com.br · Conecta. Confia. Resolve.</span>
+      <span>© 2026 Bora · Rio de Janeiro</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      document.documentElement.classList.add('fonts-loaded');
+    });
+  } else {
+    document.documentElement.classList.add('fonts-loaded');
+  }
+</script>
+</body>
+</html>

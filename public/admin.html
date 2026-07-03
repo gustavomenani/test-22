@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Lista de espera</title>
+  <link rel="icon" type="image/png" href="assets/favicon-blue.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #4338CA;
+      --purple-light: #6366F1;
+      --ink: #0F172A;
+      --gray-50: #F8FAFC;
+      --gray-100: #F1F5F9;
+      --gray-200: #E2E8F0;
+      --gray-400: #94A3B8;
+      --gray-500: #6B7280;
+      --gray-700: #374151;
+      --green: #10B981;
+      --red: #EF4444;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-50);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+    }
+
+    .login-logo {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--purple);
+      margin-bottom: 8px;
+    }
+
+    .login-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .login-sub {
+      font-size: 0.88rem;
+      color: var(--gray-400);
+      margin-bottom: 32px;
+    }
+
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .field input:focus { border-color: var(--purple); }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: var(--purple);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background .15s;
+    }
+
+    .btn-login:hover { background: #3730A3; }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .login-error {
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      color: var(--red);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      margin-top: 16px;
+      display: none;
+    }
+
+    /* ── DASHBOARD ── */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: #fff;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 0 32px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-logo {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--purple);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .topbar-email {
+      font-size: 0.85rem;
+      color: var(--gray-500);
+    }
+
+    .btn-logout {
+      padding: 7px 16px;
+      background: transparent;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gray-700);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .15s;
+    }
+
+    .btn-logout:hover { border-color: var(--red); color: var(--red); }
+
+    .main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 32px;
+    }
+
+    .page-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .page-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+    }
+
+    .page-subtitle {
+      font-size: 0.9rem;
+      color: var(--gray-400);
+      margin-top: 4px;
+    }
+
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 20px 24px;
+      min-width: 160px;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gray-400);
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .stat-value.purple { color: var(--purple); }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-input {
+      flex: 1;
+      min-width: 200px;
+      padding: 9px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 9px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .search-input:focus { border-color: var(--purple); }
+
+    .filter-select {
+      padding: 9px 14px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 9px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn-export {
+      padding: 9px 18px;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 9px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+    }
+
+    .btn-export:hover { background: #059669; }
+
+    .table-wrap {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background: var(--gray-50);
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    th {
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gray-500);
+      text-transform: uppercase;
+      letter-spacing: .4px;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 13px 16px;
+      font-size: 0.88rem;
+      color: var(--gray-700);
+      border-bottom: 1px solid var(--gray-100);
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--gray-50); }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .badge-cliente   { background: #EEF2FF; color: var(--purple); }
+    .badge-prestador { background: #EFF6FF; color: #1D4ED8; }
+    .badge-lojista   { background: #ECFDF5; color: #059669; }
+    .badge-default   { background: var(--gray-100); color: var(--gray-500); }
+
+    .empty-state {
+      text-align: center;
+      padding: 64px 24px;
+      color: var(--gray-400);
+    }
+
+    .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 0.95rem; }
+
+    .loading {
+      text-align: center;
+      padding: 48px;
+      color: var(--gray-400);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 700px) {
+      .topbar { padding: 0 16px; }
+      .topbar-email { display: none; }
+
+      .main { padding: 20px 16px; }
+
+      .page-header { flex-direction: column; align-items: flex-start; }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .toolbar { flex-direction: column; }
+      .search-input, .filter-select, .btn-export { width: 100%; }
+
+      .table-wrap { border-radius: 10px; }
+
+      table { font-size: 0.82rem; }
+      th, td { padding: 10px 12px; white-space: nowrap; }
+
+      .login-card { padding: 36px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── LOGIN ── -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo"><img src="assets/logo1.png" alt="Bora" style="height:36px;width:auto;display:block;margin-bottom:4px;"></div>
+    <div class="login-title">Área administrativa</div>
+    <div class="login-sub">Acesso restrito à equipe Bora</div>
+
+    <div class="field">
+      <label>E-mail</label>
+      <input type="email" id="login-email" placeholder="seu@email.com" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Senha</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+
+    <button class="btn-login" id="btn-login">Entrar</button>
+    <div class="login-error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- ── DASHBOARD ── -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-logo"><img src="assets/logo1.png" alt="Bora" style="height:32px;width:auto;display:block;"></div>
+    <div class="topbar-right">
+      <span class="topbar-email" id="admin-email"></span>
+      <button class="btn-logout" id="btn-logout">Sair</button>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Lista de espera</div>
+        <div class="page-subtitle" id="last-updated">Carregando...</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total</div>
+        <div class="stat-value purple" id="stat-total">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Clientes</div>
+        <div class="stat-value" id="stat-clientes">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Prestadores</div>
+        <div class="stat-value" id="stat-prestadores">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Lojistas</div>
+        <div class="stat-value" id="stat-lojistas">—</div>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input class="search-input" type="text" id="search" placeholder="Buscar por nome, e-mail ou cidade...">
+      <select class="filter-select" id="filter-type">
+        <option value="">Todos os tipos</option>
+        <option value="cliente">Clientes</option>
+        <option value="prestador">Prestadores</option>
+        <option value="lojista">Lojistas</option>
+      </select>
+      <button class="btn-export" id="btn-export">⬇ Exportar CSV</button>
+    </div>
+
+    <div class="table-wrap">
+      <div class="loading" id="loading">Carregando cadastros...</div>
+      <table id="table" style="display:none">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>WhatsApp</th>
+            <th>Cidade</th>
+            <th>Estado</th>
+            <th>Tipo</th>
+            <th>Categoria</th>
+            <th>Cadastro</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <div class="empty-icon">📭</div>
+        <p>Nenhum cadastro encontrado.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+  import { getFirestore, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-5zcgd5lToWSesA4Lf7k7gs8zqihGNrw",
+    authDomain: "bora-cliente.firebaseapp.com",
+    projectId: "bora-cliente",
+    storageBucket: "bora-cliente.firebasestorage.app",
+    messagingSenderId: "801263217269",
+    appId: "1:801263217269:web:859704610d8d29aa62e63c"
+  };
+
+  const app  = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db   = getFirestore(app);
+
+  let allContacts = [];
+
+  // ── Auth state ──────────────────────────────────────
+  onAuthStateChanged(auth, user => {
+    if (user) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      document.getElementById('admin-email').textContent = user.email;
+      loadContacts();
+    } else {
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('dashboard').style.display = 'none';
+    }
+  });
+
+  // ── Login ────────────────────────────────────────────
+  document.getElementById('btn-login').addEventListener('click', async () => {
+    const email    = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const btn      = document.getElementById('btn-login');
+    const errDiv   = document.getElementById('login-error');
+
+    errDiv.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Entrando...';
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (err) {
+      errDiv.textContent = 'E-mail ou senha incorretos.';
+      errDiv.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    }
+  });
+
+  document.getElementById('login-password').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('btn-login').click();
+  });
+
+  // ── Logout ───────────────────────────────────────────
+  document.getElementById('btn-logout').addEventListener('click', () => signOut(auth));
+
+  // ── Load contacts ────────────────────────────────────
+  async function loadContacts() {
+    try {
+      const q = query(collection(db, 'waitlist'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
+      allContacts = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      updateStats();
+      renderTable(allContacts);
+      document.getElementById('last-updated').textContent =
+        `${allContacts.length} cadastros · atualizado agora`;
+    } catch (err) {
+      console.error(err);
+      document.getElementById('loading').textContent = 'Erro ao carregar dados. Verifique as permissões do Firestore.';
+    }
+  }
+
+  // ── Stats ────────────────────────────────────────────
+  function updateStats() {
+    const total      = allContacts.length;
+    const clientes   = allContacts.filter(c => normalize(c.userType).includes('contrat')).length;
+    const prestadores = allContacts.filter(c => normalize(c.userType).includes('oferecer') || normalize(c.userType).includes('prestar')).length;
+    const lojistas   = allContacts.filter(c => normalize(c.userType).includes('lojista') || normalize(c.userType).includes('fornecedor')).length;
+
+    document.getElementById('stat-total').textContent      = total;
+    document.getElementById('stat-clientes').textContent   = clientes;
+    document.getElementById('stat-prestadores').textContent = prestadores;
+    document.getElementById('stat-lojistas').textContent   = lojistas;
+  }
+
+  // ── Render ───────────────────────────────────────────
+  function renderTable(data) {
+    document.getElementById('loading').style.display = 'none';
+
+    if (data.length === 0) {
+      document.getElementById('table').style.display = 'none';
+      document.getElementById('empty-state').style.display = 'block';
+      return;
+    }
+
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('table').style.display = 'table';
+
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = data.map((c, i) => `
+      <tr>
+        <td>${i + 1}</td>
+        <td><strong>${esc(c.name || '—')}</strong></td>
+        <td>${esc(c.email || '—')}</td>
+        <td>${esc(c.phone || '—')}</td>
+        <td>${esc(c.city || '—')}</td>
+        <td>${esc(c.state || '—')}</td>
+        <td>${badgeHtml(c.userType)}</td>
+        <td>${esc(c.category || '—')}</td>
+        <td>${formatDate(c.createdAt)}</td>
+      </tr>
+    `).join('');
+  }
+
+  // ── Search & filter ──────────────────────────────────
+  function applyFilters() {
+    const term = normalize(document.getElementById('search').value);
+    const type = normalize(document.getElementById('filter-type').value);
+
+    const filtered = allContacts.filter(c => {
+      const matchSearch = !term ||
+        normalize(c.name).includes(term) ||
+        normalize(c.email).includes(term) ||
+        normalize(c.city).includes(term);
+
+      const matchType = !type || normalize(c.userType).includes(type);
+      return matchSearch && matchType;
+    });
+
+    renderTable(filtered);
+  }
+
+  document.getElementById('search').addEventListener('input', applyFilters);
+  document.getElementById('filter-type').addEventListener('change', applyFilters);
+
+  // ── Export CSV ───────────────────────────────────────
+  document.getElementById('btn-export').addEventListener('click', () => {
+    const headers = ['Nome','E-mail','WhatsApp','Cidade','Estado','Tipo','Categoria','Data'];
+    const rows = allContacts.map(c => [
+      c.name || '', c.email || '', c.phone || '', c.city || '',
+      c.state || '', c.userType || '', c.category || '', formatDate(c.createdAt)
+    ]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
+    const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement('a'), { href: url, download: 'lista-espera.csv' });
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // ── Helpers ──────────────────────────────────────────
+  function normalize(str) {
+    return (str || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  }
+
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function formatDate(ts) {
+    if (!ts) return '—';
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit' });
+  }
+
+  function badgeHtml(type) {
+    const t = normalize(type);
+    if (t.includes('contrat'))  return `<span class="badge badge-cliente">Cliente</span>`;
+    if (t.includes('oferecer') || t.includes('prestar')) return `<span class="badge badge-prestador">Prestador</span>`;
+    if (t.includes('lojista') || t.includes('fornecedor')) return `<span class="badge badge-lojista">Lojista</span>`;
+    return `<span class="badge badge-default">${esc(type || '—')}</span>`;
+  }
+</script>
+</body>
+</html>

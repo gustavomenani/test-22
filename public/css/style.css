@@ -112,12 +112,9 @@ header .prelaunch{font-family:var(--mono);font-size:.66rem;font-weight:700;lette
 @media(max-width:460px){.cats-grid{grid-template-columns:1fr 1fr}}
 .cat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 16px;text-align:center;box-shadow:var(--sh-sm);transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1)}
 .cat:hover{transform:translateY(-4px);box-shadow:0 14px 30px -10px rgba(28,27,75,.22)}
-.cat:hover .cicon{background:var(--indigo-600);color:#fff;transform:scale(1.08) rotate(3deg)}
+.cat:hover .cemoji{transform:scale(1.1) rotate(3deg)}
 
-.cat .cicon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:12px;background:var(--lav);color:var(--indigo-600);margin-bottom:14px;transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),background-color 0.2s ease,color 0.2s ease}
-.cat .cicon .material-symbols-outlined{font-size:24px}
-.cat:hover .cicon{background:var(--indigo-600);color:#fff}
-.cat .cicon svg{width:24px;height:24px}
+.cat .cemoji{font-size:1.9rem;display:block;margin-bottom:14px;transition:transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)}
 .wl-badge .b-ic svg{width:20px;height:20px}
 
 .cat .cname{font-family:var(--disp);font-weight:700;font-size:.98rem;color:var(--ink);line-height:1.2}
@@ -356,18 +353,6 @@ footer{background:var(--indigo-950);color:#8b8fce;padding:40px 0 30px;border-top
   height: 28px !important;
   font-size: 28px !important;
   color: var(--cyan) !important;
-}
-
-/* Categories icons (.cat .cicon) */
-.cat .cicon {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-.cat .cicon .material-symbols-outlined {
-  width: 24px !important;
-  height: 24px !important;
-  font-size: 24px !important;
 }
 
 /* Waitlist badge icons (.wl-badge .b-ic) */
